@@ -1,73 +1,146 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🌌 ONEIROS
 
-Currently, two official plugins are available:
+### Annual Cultural Festival — Manipal University Jaipur
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*Where Dreams Meet the Cosmos*
 
-## React Compiler
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-r170-000000?logo=threedotjs&logoColor=white)](https://threejs.org/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-FF0050?logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+</div>
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎆 Immersive 3D Galaxy Background
+- **Star Field** — 3,000 animated stars distributed in a sphere with slow rotation
+- **Spiral Nebula** — 4,000-particle galaxy with 3-arm structure and interactive cursor repulsion
+- **Shooting Stars** — Periodic streaks across the canvas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 🌀 Cosmic Preloader
+- Triple orbiting rings (purple, pink, blue) with glowing dots
+- Pulsing center glow with animated progress bar
+- Smooth fade-out transition into the main site
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 📖 Scroll-Based Storytelling
+- **Constellation Chapters** — 4 unique SVG constellations that draw themselves as you scroll
+- **Progress Trail** — Glowing purple-to-pink trail on the left edge tracking scroll position
+- **Parallax Hero** — Title scales and fades on scroll, revealing chapter interludes
+
+### 🎨 Design System
+- **Glassmorphism** — Frosted glass cards with layered backdrop blur
+- **Liquid Glass Navbar** — Floating rounded pill with multi-layered glass effect
+- **Cosmic Cursor** — Custom glowing cursor with stardust particle trail
+- **Cosmic Palette** — Deep space blues, purples, and pinks
+
+### 📱 Sections
+| Section | Description |
+|---------|-------------|
+| **Hero** | Full-viewport title with gradient animation and parallax zoom |
+| **About** | Festival details, orbiting planet visual, statistics grid |
+| **Events** | 9 event cards with hover glow effects |
+| **Timeline** | 3-day schedule with alternating cards and pulsing nodes |
+| **Gallery** | Cosmic gradient cards with star scatter overlays |
+| **Footer** | SVG social icons in glass cards with hover glow |
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|-----------|---------|
+| **Vite + React + TypeScript** | Build system & UI framework |
+| **Three.js** (`@react-three/fiber`, `@react-three/drei`) | 3D galaxy background |
+| **Framer Motion** | Scroll animations, transitions, and micro-interactions |
+| **Vanilla CSS** | Custom design system with CSS custom properties |
+| **Google Fonts** | Orbitron + Inter typography |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js** 18+ 
+- **npm** 9+
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Ronitdoes/Onerios-MUJ.git
+
+# Navigate to the project
+cd Onerios-MUJ
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The site will be available at `http://localhost:5173/`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build for Production
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── Galaxy/
+│   │   ├── CosmosCanvas.tsx    # Three.js canvas wrapper
+│   │   ├── StarField.tsx       # Animated star particles
+│   │   ├── Nebula.tsx          # Interactive spiral nebula
+│   │   └── ShootingStars.tsx   # Periodic shooting stars
+│   ├── Navbar.tsx              # Floating glass pill navbar
+│   ├── Hero.tsx                # Parallax hero section
+│   ├── About.tsx               # Festival info + stats
+│   ├── Events.tsx              # Event cards grid
+│   ├── Timeline.tsx            # 3-day schedule
+│   ├── Gallery.tsx             # Cosmic gallery
+│   ├── Footer.tsx              # Social links + credits
+│   ├── Preloader.tsx           # Cosmic loading animation
+│   ├── ScrollProgress.tsx      # Scroll progress trail
+│   ├── StoryInterlude.tsx      # Constellation storytelling
+│   └── CosmicCursor.tsx        # Custom cursor effect
+├── App.tsx                     # Main app composition
+├── main.tsx                    # Entry point
+└── index.css                   # Cosmic design system
+```
+
+---
+
+## 🎯 Key Interactions
+
+- **Move your cursor** over the nebula to see particles repel away like a magnetic field
+- **Scroll slowly** through the page to watch constellations draw themselves between sections
+- **Hover** over event cards and social icons for glow and lift effects
+- **Watch** the scroll progress trail light up as you navigate
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+
+**Built with 💜 for Oneiros — MUJ Cultural Fest**
+
+</div>
