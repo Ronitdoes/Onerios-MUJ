@@ -1,14 +1,28 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const rafId = useRef(0);
+    const ticking = useRef(false);
+
+    const handleScroll = useCallback(() => {
+        if (!ticking.current) {
+            ticking.current = true;
+            rafId.current = requestAnimationFrame(() => {
+                setScrolled(window.scrollY > 50);
+                ticking.current = false;
+            });
+        }
+    }, []);
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 50);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            cancelAnimationFrame(rafId.current);
+        };
+    }, [handleScroll]);
 
     return (
         <motion.nav

@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -7,6 +7,13 @@ export default function Nebula() {
     const pointer = useRef(new THREE.Vector3());
     const raycaster = useRef(new THREE.Raycaster());
     const plane = useRef(new THREE.Plane(new THREE.Vector3(0, 0, 1), 20));
+
+    // Pre-allocate reusable objects to avoid per-frame allocations
+    const tempVec = useMemo(() => new THREE.Vector3(), []);
+    const invMatrix = useMemo(() => new THREE.Matrix4(), []);
+    const localPointer = useMemo(() => new THREE.Vector3(), []);
+    const ndcVec = useMemo(() => new THREE.Vector2(), []);
+    const intersectVec = useMemo(() => new THREE.Vector3(), []);
 
     const { camera } = useThree();
 
@@ -48,23 +55,22 @@ export default function Nebula() {
         return [base, pos, col];
     }, []);
 
-    // Track mouse in world space
-    const onPointerMove = useCallback((e: { clientX: number; clientY: number }) => {
-        const ndcX = (e.clientX / window.innerWidth) * 2 - 1;
-        const ndcY = -(e.clientY / window.innerHeight) * 2 + 1;
-        raycaster.current.setFromCamera(new THREE.Vector2(ndcX, ndcY), camera);
-        const intersect = new THREE.Vector3();
-        raycaster.current.ray.intersectPlane(plane.current, intersect);
-        if (intersect) pointer.current.copy(intersect);
-    }, [camera]);
+    // Track mouse in world space — use useEffect for proper cleanup
+    useEffect(() => {
+        const onMove = (e: MouseEvent) => {
+            ndcVec.set(
+                (e.clientX / window.innerWidth) * 2 - 1,
+                -(e.clientY / window.innerHeight) * 2 + 1
+            );
+            raycaster.current.setFromCamera(ndcVec, camera);
+            raycaster.current.ray.intersectPlane(plane.current, intersectVec);
+            if (intersectVec) pointer.current.copy(intersectVec);
+        };
 
-    // Register global listener
-    useMemo(() => {
-        window.addEventListener('mousemove', onPointerMove as any);
-        return () => window.removeEventListener('mousemove', onPointerMove as any);
-    }, [onPointerMove]);
+        window.addEventListener('mousemove', onMove);
+        return () => window.removeEventListener('mousemove', onMove);
+    }, [camera, ndcVec, intersectVec]);
 
-    const tempVec = useMemo(() => new THREE.Vector3(), []);
     const groupRef = useRef<THREE.Group>(null!);
 
     useFrame((_state, delta) => {
@@ -80,10 +86,9 @@ export default function Nebula() {
         const radius = 6; // influence radius
         const strength = 2.5;
 
-        // Get pointer in local space
-        const worldMatrix = ref.current.matrixWorld;
-        const invMatrix = worldMatrix.clone().invert();
-        const localPointer = pointer.current.clone().applyMatrix4(invMatrix);
+        // Get pointer in local space — reuse pre-allocated matrix/vector
+        invMatrix.copy(ref.current.matrixWorld).invert();
+        localPointer.copy(pointer.current).applyMatrix4(invMatrix);
 
         for (let i = 0; i < count; i++) {
             const bx = basePositions[i * 3];
