@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const [progress, setProgress] = useState(0);
     const [phase, setPhase] = useState<'loading' | 'reveal'>('loading');
+    const lastProgress = useRef(0);
 
     useEffect(() => {
         let frame: number;
@@ -17,7 +18,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             const eased = t < 0.5
                 ? 4 * t * t * t
                 : 1 - Math.pow(-2 * t + 2, 3) / 2;
-            setProgress(Math.round(eased * 100));
+            const rounded = Math.round(eased * 100);
+
+            // Only update state when the integer value changes
+            if (rounded !== lastProgress.current) {
+                lastProgress.current = rounded;
+                setProgress(rounded);
+            }
 
             if (t < 1) {
                 frame = requestAnimationFrame(tick);

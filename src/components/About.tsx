@@ -68,9 +68,31 @@ export default function About() {
                 </motion.div>
 
                 <motion.div className="about-visual" variants={fadeUp}>
-                    <div className="orbit-ring">
-                        <div className="orbit-ring-inner" />
-                        <div className="orbit-center">MUJ</div>
+                    <div className="cosmic-emblem">
+                        {/* Outer pulsing ring */}
+                        <div className="emblem-ring emblem-ring-outer" />
+                        {/* Middle rotating ring */}
+                        <div className="emblem-ring emblem-ring-mid" />
+                        {/* Inner ring */}
+                        <div className="emblem-ring emblem-ring-inner" />
+                        {/* Core glow */}
+                        <div className="emblem-core" />
+                        {/* Center text */}
+                        <div className="emblem-text">
+                            <span className="emblem-logo">✦</span>
+                            <span className="emblem-name">ONEIROS</span>
+                            <span className="emblem-year">2026</span>
+                        </div>
+                        {/* Orbiting dots */}
+                        <div className="emblem-orbit emblem-orbit-1">
+                            <div className="emblem-dot" />
+                        </div>
+                        <div className="emblem-orbit emblem-orbit-2">
+                            <div className="emblem-dot emblem-dot-pink" />
+                        </div>
+                        <div className="emblem-orbit emblem-orbit-3">
+                            <div className="emblem-dot emblem-dot-blue" />
+                        </div>
                     </div>
                 </motion.div>
             </motion.div>

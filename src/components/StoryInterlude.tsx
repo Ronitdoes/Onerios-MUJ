@@ -155,7 +155,7 @@ export default function StoryInterlude({ line1, line2, constellation }: Props) {
                 <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{
                         fontFamily: "'Orbitron', sans-serif",
-                        fontSize: 'clamp(0.6rem, 1vw, 0.75rem)',
+                        fontSize: 'clamp(0.8rem, 1.2vw, 1rem)',
                         letterSpacing: '5px',
                         textTransform: 'uppercase',
                         color: 'rgba(139,92,246,0.75)',

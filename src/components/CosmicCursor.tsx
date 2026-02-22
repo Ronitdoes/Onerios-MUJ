@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
-export default function CosmicCursor() {
+export default memo(function CosmicCursor() {
     const dotRef = useRef<HTMLDivElement>(null);
     const ringRef = useRef<HTMLDivElement>(null);
     const trailsRef = useRef<HTMLDivElement[]>([]);
@@ -113,4 +113,4 @@ export default function CosmicCursor() {
             />
         </>
     );
-}
+});

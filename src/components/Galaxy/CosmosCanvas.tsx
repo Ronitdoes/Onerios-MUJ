@@ -19,9 +19,9 @@ export default function CosmosCanvas() {
                 <ambientLight intensity={0.1} />
 
                 {/* Multiple star layers for depth */}
-                <StarField count={2500} radius={50} speed={0.015} size={0.06} />
-                <StarField count={1000} radius={30} speed={0.025} size={0.1} />
-                <StarField count={500} radius={80} speed={0.008} size={0.04} />
+                <StarField count={1800} radius={50} speed={0.015} size={0.06} />
+                <StarField count={700} radius={30} speed={0.025} size={0.1} />
+                <StarField count={350} radius={80} speed={0.008} size={0.04} />
 
                 {/* Galaxy spiral */}
                 <Nebula />

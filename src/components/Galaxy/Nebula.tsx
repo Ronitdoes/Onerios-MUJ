@@ -18,7 +18,7 @@ export default function Nebula() {
     const { camera } = useThree();
 
     const [basePositions, positions, colors] = useMemo(() => {
-        const count = 4000;
+        const count = 3000;
         const base = new Float32Array(count * 3);
         const pos = new Float32Array(count * 3);
         const col = new Float32Array(count * 3);
@@ -67,7 +67,7 @@ export default function Nebula() {
             if (intersectVec) pointer.current.copy(intersectVec);
         };
 
-        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mousemove', onMove, { passive: true });
         return () => window.removeEventListener('mousemove', onMove);
     }, [camera, ndcVec, intersectVec]);
 

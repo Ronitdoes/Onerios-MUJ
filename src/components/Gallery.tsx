@@ -1,45 +1,42 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef, useMemo } from 'react';
+import { useRef } from 'react';
 
-const galleryItems = [
-    { label: 'War of Bands', gradient: 'linear-gradient(135deg, #1a0533, #4c1d95)' },
-    { label: 'DJ Night', gradient: 'linear-gradient(135deg, #0c1445, #1e40af)' },
-    { label: 'Fashion Show', gradient: 'linear-gradient(135deg, #2d0a3e, #7c3aed)' },
-    { label: 'Dance Battle', gradient: 'linear-gradient(135deg, #1a0533, #be185d)' },
-    { label: 'Star Night', gradient: 'linear-gradient(135deg, #0f172a, #0369a1)' },
-    { label: 'Campus Vibes', gradient: 'linear-gradient(135deg, #1e1b4b, #6d28d9)' },
+interface GalleryItem {
+    label: string;
+    gradient: string;
+    span: 'short' | 'medium' | 'tall' | 'xtall';
+}
+
+const galleryItems: GalleryItem[] = [
+    { label: 'War of Bands', gradient: 'linear-gradient(135deg, #1a0533 0%, #4c1d95 60%, #7c3aed 100%)', span: 'tall' },
+    { label: 'DJ Night', gradient: 'linear-gradient(160deg, #0c1445 0%, #1e40af 50%, #3b82f6 100%)', span: 'short' },
+    { label: 'Fashion Show', gradient: 'linear-gradient(145deg, #2d0a3e 0%, #7c3aed 40%, #a78bfa 100%)', span: 'medium' },
+    { label: 'Dance Battle', gradient: 'linear-gradient(135deg, #1a0533 0%, #be185d 50%, #f472b6 100%)', span: 'xtall' },
+    { label: 'Star Night', gradient: 'linear-gradient(150deg, #0f172a 0%, #0369a1 50%, #38bdf8 100%)', span: 'medium' },
+    { label: 'Campus Vibes', gradient: 'linear-gradient(135deg, #1e1b4b 0%, #6d28d9 60%, #8b5cf6 100%)', span: 'tall' },
+    { label: 'Open Mic', gradient: 'linear-gradient(140deg, #1c1917 0%, #92400e 50%, #f59e0b 100%)', span: 'short' },
+    { label: 'Art Exhibition', gradient: 'linear-gradient(135deg, #064e3b 0%, #059669 50%, #34d399 100%)', span: 'tall' },
+    { label: 'Comedy Night', gradient: 'linear-gradient(155deg, #312e81 0%, #4f46e5 50%, #818cf8 100%)', span: 'medium' },
+    { label: 'Cosplay', gradient: 'linear-gradient(135deg, #4a044e 0%, #c026d3 50%, #e879f9 100%)', span: 'short' },
+    { label: 'Rap Battle', gradient: 'linear-gradient(145deg, #172554 0%, #1d4ed8 50%, #60a5fa 100%)', span: 'xtall' },
+    { label: 'Flash Mob', gradient: 'linear-gradient(135deg, #3b0764 0%, #9333ea 50%, #c084fc 100%)', span: 'medium' },
 ];
+
+const spanHeights: Record<string, string> = {
+    short: '180px',
+    medium: '240px',
+    tall: '320px',
+    xtall: '400px',
+};
 
 const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
 };
 
-// Deterministic pseudo-random using a seed
-function seededRandom(seed: number) {
-    const x = Math.sin(seed * 9301 + 49297) * 49297;
-    return x - Math.floor(x);
-}
-
 export default function Gallery() {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true, margin: '-80px' });
-
-    // Pre-compute star positions so they're stable across re-renders
-    const starPositions = useMemo(() => {
-        return galleryItems.map((_, itemIdx) =>
-            Array.from({ length: 12 }, (_, starIdx) => {
-                const seed = itemIdx * 100 + starIdx;
-                return {
-                    width: seededRandom(seed) * 3 + 1,
-                    height: seededRandom(seed + 1) * 3 + 1,
-                    top: seededRandom(seed + 2) * 100,
-                    left: seededRandom(seed + 3) * 100,
-                    opacity: seededRandom(seed + 4) * 0.5 + 0.2,
-                };
-            })
-        );
-    }, []);
 
     return (
         <section className="section" id="gallery" ref={ref}>
@@ -55,43 +52,41 @@ export default function Gallery() {
                 <div className="section-divider" />
             </motion.div>
 
-            <div className="gallery-grid">
+            <div className="pinterest-grid">
                 {galleryItems.map((item, i) => (
                     <motion.div
-                        className="gallery-item"
+                        className="pin-card"
                         key={item.label}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                        transition={{ delay: i * 0.1, duration: 0.5 }}
-                        whileHover={{ scale: 1.03 }}
-                        style={{ background: item.gradient }}
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                        transition={{ delay: i * 0.06, duration: 0.5, ease: 'easeOut' }}
+                        whileHover={{ y: -6 }}
+                        style={{
+                            background: item.gradient,
+                            height: spanHeights[item.span],
+                        }}
                     >
-                        {/* Cosmic pattern overlay */}
-                        <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            background: `radial-gradient(circle at ${30 + i * 10}% ${40 + i * 5}%, rgba(255,255,255,0.08) 0%, transparent 50%)`,
-                        }} />
+                        {/* Subtle noise texture */}
+                        <div className="pin-texture" />
 
-                        {/* Scattered stars — stable positions */}
-                        {starPositions[i].map((star, j) => (
-                            <div
-                                key={j}
-                                style={{
-                                    position: 'absolute',
-                                    width: star.width + 'px',
-                                    height: star.height + 'px',
-                                    background: '#fff',
-                                    borderRadius: '50%',
-                                    top: star.top + '%',
-                                    left: star.left + '%',
-                                    opacity: star.opacity,
-                                }}
-                            />
-                        ))}
+                        {/* Radial highlight */}
+                        <div
+                            className="pin-highlight"
+                            style={{
+                                background: `radial-gradient(circle at ${30 + (i % 5) * 15}% ${20 + (i % 4) * 20}%, rgba(255,255,255,0.1) 0%, transparent 60%)`,
+                            }}
+                        />
 
-                        <div className="gallery-overlay">
-                            <span>{item.label}</span>
+                        {/* Bottom label overlay */}
+                        <div className="pin-overlay">
+                            <span className="pin-label">{item.label}</span>
+                        </div>
+
+                        {/* Hover save icon */}
+                        <div className="pin-action">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                            </svg>
                         </div>
                     </motion.div>
                 ))}

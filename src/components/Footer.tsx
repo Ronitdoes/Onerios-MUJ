@@ -6,6 +6,10 @@ const fadeUp = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
+const stagger = {
+    visible: { transition: { staggerChildren: 0.1 } },
+};
+
 const socials = [
     {
         label: 'Instagram',
@@ -41,6 +45,13 @@ const socials = [
     },
 ];
 
+const footerLinks = [
+    { label: 'About', href: '#about' },
+    { label: 'Events', href: '#events' },
+    { label: 'Schedule', href: '#schedule' },
+    { label: 'Gallery', href: '#gallery' },
+];
+
 export default function Footer() {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true, margin: '-50px' });
@@ -48,61 +59,78 @@ export default function Footer() {
     return (
         <footer className="footer" id="contact" ref={ref}>
             <motion.div
+                className="footer-inner"
                 initial="hidden"
                 animate={inView ? 'visible' : 'hidden'}
-                variants={fadeUp}
+                variants={stagger}
             >
-                <div className="footer-logo">ONEIROS</div>
-                <p className="footer-tagline">
-                    Annual Cultural Festival · Manipal University Jaipur
-                </p>
+                {/* Big branding moment */}
+                <motion.div className="footer-brand" variants={fadeUp}>
+                    <div className="footer-logo-large">ONEIROS</div>
+                    <p className="footer-hero-tagline">See you among the stars ✦</p>
+                </motion.div>
 
-                <div className="social-links" style={{ display: 'flex', gap: 16, justifyContent: 'center', margin: '28px 0' }}>
-                    {socials.map(({ label, href, icon }) => (
-                        <motion.a
-                            key={label}
-                            href={href}
-                            target={href.startsWith('mailto') ? undefined : '_blank'}
-                            rel="noopener noreferrer"
-                            aria-label={label}
-                            whileHover={{ scale: 1.15, y: -3 }}
-                            whileTap={{ scale: 0.95 }}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                width: 48,
-                                height: 48,
-                                borderRadius: 14,
-                                border: '1px solid rgba(139, 92, 246, 0.2)',
-                                background: 'rgba(139, 92, 246, 0.06)',
-                                color: 'rgba(240, 240, 255, 0.6)',
-                                transition: 'all 0.3s ease',
-                                backdropFilter: 'blur(8px)',
-                            }}
-                            onMouseEnter={e => {
-                                const el = e.currentTarget;
-                                el.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-                                el.style.color = '#A78BFA';
-                                el.style.background = 'rgba(139, 92, 246, 0.12)';
-                                el.style.boxShadow = '0 0 20px rgba(139, 92, 246, 0.2), 0 0 40px rgba(139, 92, 246, 0.1)';
-                            }}
-                            onMouseLeave={e => {
-                                const el = e.currentTarget;
-                                el.style.borderColor = 'rgba(139, 92, 246, 0.2)';
-                                el.style.color = 'rgba(240, 240, 255, 0.6)';
-                                el.style.background = 'rgba(139, 92, 246, 0.06)';
-                                el.style.boxShadow = 'none';
-                            }}
-                        >
-                            {icon}
-                        </motion.a>
-                    ))}
-                </div>
+                {/* CTA */}
+                <motion.div className="footer-cta-wrap" variants={fadeUp}>
+                    <a href="#events" className="footer-cta">
+                        <span>Explore Events</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14" />
+                            <path d="M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </motion.div>
 
-                <p className="footer-copy">
-                    © {new Date().getFullYear()} Oneiros · Manipal University Jaipur · All rights reserved
-                </p>
+                {/* Links + Social row */}
+                <motion.div className="footer-grid" variants={fadeUp}>
+                    <div className="footer-col">
+                        <h4 className="footer-col-title">Navigate</h4>
+                        <div className="footer-nav-links">
+                            {footerLinks.map(link => (
+                                <a key={link.label} href={link.href} className="footer-nav-link">
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="footer-col footer-col-center">
+                        <h4 className="footer-col-title">Connect</h4>
+                        <div className="social-links">
+                            {socials.map(({ label, href, icon }) => (
+                                <motion.a
+                                    key={label}
+                                    href={href}
+                                    target={href.startsWith('mailto') ? undefined : '_blank'}
+                                    rel="noopener noreferrer"
+                                    aria-label={label}
+                                    className="social-link"
+                                    whileHover={{ scale: 1.12, y: -3 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {icon}
+                                </motion.a>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="footer-col footer-col-right">
+                        <h4 className="footer-col-title">Festival</h4>
+                        <p className="footer-info">Annual Cultural Festival</p>
+                        <p className="footer-info">Manipal University Jaipur</p>
+                        <p className="footer-info">Rajasthan, India</p>
+                    </div>
+                </motion.div>
+
+                {/* Bottom bar */}
+                <motion.div className="footer-bottom" variants={fadeUp}>
+                    <p className="footer-copy">
+                        © {new Date().getFullYear()} Oneiros · Manipal University Jaipur · All rights reserved
+                    </p>
+                    <p className="footer-made">
+                        Crafted with ✦ by OnO MUJ
+                    </p>
+                </motion.div>
             </motion.div>
         </footer>
     );
