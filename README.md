@@ -6,11 +6,11 @@
 
 *Where Dreams Meet the Cosmos*
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev/)
-[![Three.js](https://img.shields.io/badge/Three.js-r170-000000?logo=threedotjs&logoColor=white)](https://threejs.org/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-FF0050?logo=framer&logoColor=white)](https://www.framer.com/motion/)
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-r183-000000?logo=threedotjs&logoColor=white)](https://threejs.org/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-FF0050?logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 </div>
 
@@ -31,7 +31,7 @@
 ### 📖 Scroll-Based Storytelling
 - **Constellation Chapters** — 4 unique SVG constellations that draw themselves as you scroll
 - **Progress Trail** — Glowing purple-to-pink trail on the left edge tracking scroll position
-- **Parallax Hero** — Title scales and fades on scroll, revealing chapter interludes
+- **Parallax Hero** — Title scales and fades on scroll, revealing chapter interludes (desktop only)
 
 ### 🎨 Design System
 - **Glassmorphism** — Frosted glass cards with layered backdrop blur
@@ -39,15 +39,21 @@
 - **Cosmic Cursor** — Custom glowing cursor with stardust particle trail
 - **Cosmic Palette** — Deep space blues, purples, and pinks
 
-### 📱 Sections
+### 📱 Mobile Responsive
+- **Full-Screen Mobile Menu** — Hamburger → X animated toggle with overlay navigation
+- **Optimized Hero** — Static rendering without animations for better mobile performance
+- **Compact Spacing** — Reduced padding, margins, and gaps across all sections
+- **Body Scroll Lock** — Prevents background scrolling when mobile menu is open
+
+### 🖼️ Sections
 | Section | Description |
 |---------|-------------|
-| **Hero** | Full-viewport title with gradient animation and parallax zoom |
-| **About** | Festival details, orbiting planet visual, statistics grid |
+| **Hero** | Full-viewport title with gradient animation and parallax zoom (desktop) / static (mobile) |
+| **About** | Festival details, orbiting cosmic emblem, statistics grid |
 | **Events** | 9 event cards with hover glow effects |
 | **Timeline** | 3-day schedule with alternating cards and pulsing nodes |
-| **Gallery** | Cosmic gradient cards with star scatter overlays |
-| **Footer** | SVG social icons in glass cards with hover glow |
+| **Gallery** | Pinterest-style masonry grid with cosmic gradient cards |
+| **Footer** | Oneiros logo, SVG social icons, navigation links with hover glow |
 
 ---
 
@@ -100,19 +106,23 @@ npm run preview
 
 ```
 src/
+├── assets/
+│   ├── ono.jpg                 # Festival photo
+│   ├── onoL.png                # Oneiros logo
+│   └── onoWhite.png            # White variant logo
 ├── components/
 │   ├── Galaxy/
 │   │   ├── CosmosCanvas.tsx    # Three.js canvas wrapper
 │   │   ├── StarField.tsx       # Animated star particles
 │   │   ├── Nebula.tsx          # Interactive spiral nebula
 │   │   └── ShootingStars.tsx   # Periodic shooting stars
-│   ├── Navbar.tsx              # Floating glass pill navbar
-│   ├── Hero.tsx                # Parallax hero section
-│   ├── About.tsx               # Festival info + stats
+│   ├── Navbar.tsx              # Floating glass pill navbar + mobile menu
+│   ├── Hero.tsx                # Parallax hero section (responsive)
+│   ├── About.tsx               # Festival info + cosmic emblem + stats
 │   ├── Events.tsx              # Event cards grid
 │   ├── Timeline.tsx            # 3-day schedule
-│   ├── Gallery.tsx             # Cosmic gallery
-│   ├── Footer.tsx              # Social links + credits
+│   ├── Gallery.tsx             # Pinterest masonry gallery
+│   ├── Footer.tsx              # Logo, social links + credits
 │   ├── Preloader.tsx           # Cosmic loading animation
 │   ├── ScrollProgress.tsx      # Scroll progress trail
 │   ├── StoryInterlude.tsx      # Constellation storytelling
@@ -130,6 +140,7 @@ src/
 - **Scroll slowly** through the page to watch constellations draw themselves between sections
 - **Hover** over event cards and social icons for glow and lift effects
 - **Watch** the scroll progress trail light up as you navigate
+- **On mobile** — tap the hamburger menu for a full-screen animated navigation overlay
 
 ---
 
