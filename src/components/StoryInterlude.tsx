@@ -58,8 +58,8 @@ export default function StoryInterlude({ line1, line2, constellation }: Props) {
     const c = constellations[constellation];
 
     return (
-        <div ref={ref} style={{ height: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-            <motion.div style={{ opacity, y, scale, display: 'flex', alignItems: 'center', gap: 'clamp(40px,8vw,100px)', maxWidth: 1050, padding: '0 24px', width: '100%' }}>
+        <div ref={ref} style={{ height: 'clamp(50vh, 65vh, 75vh)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+            <motion.div style={{ opacity, y, scale, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 'clamp(20px, 5vw, 100px)', maxWidth: 1050, padding: '0 16px', width: '100%' }}>
 
                 {/* Constellation */}
                 <div style={{ position: 'relative', width: 'clamp(160px,22vw,260px)', height: 'clamp(160px,22vw,260px)', flexShrink: 0 }}>
