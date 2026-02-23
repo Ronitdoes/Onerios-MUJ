@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const textVariants = {
@@ -10,8 +10,23 @@ const textVariants = {
     }),
 };
 
+function useIsMobile(breakpoint = 768) {
+    const [isMobile, setIsMobile] = useState(
+        typeof window !== 'undefined' ? window.innerWidth <= breakpoint : false
+    );
+    useEffect(() => {
+        const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
+        const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+        setIsMobile(mq.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, [breakpoint]);
+    return isMobile;
+}
+
 export default function Hero() {
     const ref = useRef<HTMLDivElement>(null);
+    const isMobile = useIsMobile();
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ['start start', 'end start'],
@@ -28,74 +43,98 @@ export default function Hero() {
         <section className="hero" id="home" ref={ref}>
             <motion.div
                 style={{
-                    y: bgY,
+                    y: isMobile ? 0 : bgY,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     textAlign: 'center',
                 }}
             >
-                <motion.h1
-                    className="hero-title"
-                    custom={0}
-                    initial="hidden"
-                    animate="visible"
-                    variants={textVariants}
-                    style={{
-                        scale: titleScale,
-                        opacity: titleOpacity,
-                    }}
-                >
-                    ONEIROS
-                </motion.h1>
+                {isMobile ? (
+                    /* Static (no animation) on mobile */
+                    <h1 className="hero-title">ONEIROS</h1>
+                ) : (
+                    <motion.h1
+                        className="hero-title"
+                        custom={0}
+                        initial="hidden"
+                        animate="visible"
+                        variants={textVariants}
+                        style={{
+                            scale: titleScale,
+                            opacity: titleOpacity,
+                        }}
+                    >
+                        ONEIROS
+                    </motion.h1>
+                )}
 
-                <motion.p
-                    className="hero-subtitle"
-                    custom={1}
-                    initial="hidden"
-                    animate="visible"
-                    variants={textVariants}
-                    style={{ y: subtitleY, opacity: titleOpacity }}
-                >
-                    Annual Cultural Festival
-                </motion.p>
+                {isMobile ? (
+                    <p className="hero-subtitle">Annual Cultural Festival</p>
+                ) : (
+                    <motion.p
+                        className="hero-subtitle"
+                        custom={1}
+                        initial="hidden"
+                        animate="visible"
+                        variants={textVariants}
+                        style={{ y: subtitleY, opacity: titleOpacity }}
+                    >
+                        Annual Cultural Festival
+                    </motion.p>
+                )}
 
-                <motion.p
-                    className="hero-tagline"
-                    custom={2}
-                    initial="hidden"
-                    animate="visible"
-                    variants={textVariants}
-                    style={{ y: subtitleY, opacity: titleOpacity }}
-                >
-                    Manipal University Jaipur · Where Dreams Meet the Cosmos
-                </motion.p>
+                {isMobile ? (
+                    <p className="hero-tagline">
+                        Manipal University Jaipur · Where Dreams Meet the Cosmos
+                    </p>
+                ) : (
+                    <motion.p
+                        className="hero-tagline"
+                        custom={2}
+                        initial="hidden"
+                        animate="visible"
+                        variants={textVariants}
+                        style={{ y: subtitleY, opacity: titleOpacity }}
+                    >
+                        Manipal University Jaipur · Where Dreams Meet the Cosmos
+                    </motion.p>
+                )}
 
-                <motion.a
-                    href="#events"
-                    className="hero-cta"
-                    custom={3}
-                    initial="hidden"
-                    animate="visible"
-                    variants={textVariants}
-                    style={{ y: ctaY, opacity: titleOpacity }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.97 }}
-                >
-                    <span>Explore Events</span>
-                </motion.a>
+                {isMobile ? (
+                    <a href="#events" className="hero-cta">
+                        <span>Explore Events</span>
+                    </a>
+                ) : (
+                    <motion.a
+                        href="#events"
+                        className="hero-cta"
+                        custom={3}
+                        initial="hidden"
+                        animate="visible"
+                        variants={textVariants}
+                        style={{ y: ctaY, opacity: titleOpacity }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.97 }}
+                    >
+                        <span>Explore Events</span>
+                    </motion.a>
+                )}
             </motion.div>
 
-            <motion.div
-                className="hero-scroll-indicator"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2, duration: 1 }}
-                style={{ opacity: titleOpacity }}
-            >
-                <span>Scroll</span>
-                <div className="scroll-line" />
-            </motion.div>
+            {!isMobile && (
+                <motion.div
+                    className="hero-scroll-indicator"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2, duration: 1 }}
+                    style={{ opacity: titleOpacity }}
+                >
+                    <span>Scroll</span>
+                    <div className="scroll-line" />
+                </motion.div>
+            )}
         </section>
     );
 }
+
