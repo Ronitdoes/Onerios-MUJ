@@ -175,6 +175,15 @@ a:hover {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-logo-img {
+  height: clamp(22px, 2.5vw, 30px);
+  width: auto;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
 }
 
 .navbar-links {
@@ -637,10 +646,11 @@ a:hover {
   gap: 4px;
 }
 
-.emblem-logo {
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-  color: var(--accent-purple);
-  text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+.emblem-logo-img {
+  width: clamp(60px, 8vw, 100px);
+  height: auto;
+  filter: drop-shadow(0 0 16px rgba(139, 92, 246, 0.5)) drop-shadow(0 0 40px rgba(139, 92, 246, 0.2));
+  margin-bottom: 4px;
 }
 
 .emblem-name {
@@ -1093,6 +1103,13 @@ a:hover {
   background-clip: text;
   animation: gradient-shift 6s ease infinite;
   filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.2));
+}
+
+.footer-logo-img {
+  width: clamp(80px, 14vw, 160px);
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(139, 92, 246, 0.4)) drop-shadow(0 0 60px rgba(139, 92, 246, 0.15));
+  margin-bottom: 12px;
 }
 
 .footer-hero-tagline {

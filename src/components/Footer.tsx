@@ -66,6 +66,7 @@ export default function Footer() {
             >
                 {/* Big branding moment */}
                 <motion.div className="footer-brand" variants={fadeUp}>
+                    <img src="/onoL.png" alt="Oneiros" className="footer-logo-img" />
                     <div className="footer-logo-large">ONEIROS</div>
                     <p className="footer-hero-tagline">See you among the stars ✦</p>
                 </motion.div>
